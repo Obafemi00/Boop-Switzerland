@@ -44,6 +44,7 @@ body {
     color: var(--text-color);
     background-color: var(--background-color);
     overflow-x: hidden;
+    padding-top: 130px; /* Adjust based on navbar height + margin */
 }
 
 /* Navigation */
@@ -56,6 +57,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     transition: background-color 0.3s ease;
+    margin-bottom: 40px;
 }
 
 .navbar.scrolled {
