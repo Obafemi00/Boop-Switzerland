@@ -359,7 +359,7 @@ body {
 
 /* Footer */
 .footer {
-    background-color: var(--footer-bg);
+    background-color: var(--teal4); /* Changed to a darker accent color */
     padding: 4rem 0 2rem;
 }
 
@@ -376,7 +376,7 @@ body {
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: var(--primary-color);
+    color: var(--beige2); /* Changed to a lighter color for contrast */
 }
 
 .footer-section ul {
@@ -388,20 +388,22 @@ body {
 }
 
 .footer-section ul li a {
-    color: var(--text-color);
+    color: var(--beige1); /* Changed to a lighter color for contrast */
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, text-decoration 0.3s ease; /* Added text-decoration to transition */
 }
 
 .footer-section ul li a:hover {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Kept primary color for hover effect */
+    text-decoration: underline; /* Added underline on hover */
 }
 
 .footer-bottom {
     text-align: center;
     margin-top: 2rem;
     padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid var(--grey3); /* Adjusted border color for contrast */
+    color: var(--beige1); /* Changed text color for contrast */
 }
 
 /* Animations */
