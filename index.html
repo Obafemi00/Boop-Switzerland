@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.O.O.P Switzerland - Global Media Powerhouse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="logo">B.O.O.P Switzerland</a>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="project.html">Project</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <button class="close-btn">&times;</button>
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="project.html">Project</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content animate">
+            <h1>B.O.O.P Switzerland</h1>
+            <div class="floating-words">
+                <span class="floating-word">Storytellers</span>
+                <span class="floating-word">Groundbreakers</span>
+                <span class="floating-word">Trailblazers</span>
+                <span class="floating-word">Changemakers</span>
+            </div>
+            <p class="tagline">Where Innovation Meets Impact</p>
+            <a href="contact.html" class="cta-button">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- About Us Summary Section -->
+    <section class="feature-section animate">
+        <div class="section-content">
+            <h2 class="section-title">About Us</h2>
+            <p>B.O.O.P Switzerland is a global media powerhouse, a force for storytelling, innovation, and impact. We push boundaries, break barriers, and tell stories that matter—all while making a lasting social and cultural impact.</p>
+            <a href="about.html" class="cta-button">Learn More About Us</a>
+        </div>
+    </section>
+
+    <!-- Services Summary Section -->
+    <section class="feature-section animate">
+        <div class="section-content">
+            <h2 class="section-title">Our Services</h2>
+            <p>We offer a diverse range of services including TV & Film Production, Media Consulting, Project Management, Brand Collaborations, and Talent Development. Our expertise ensures your vision comes to life with precision and impact.</p>
+            <a href="services.html" class="cta-button">Explore Our Services</a>
+        </div>
+    </section>
+
+    <!-- Projects Summary Section -->
+    <section class="feature-section animate">
+        <div class="section-content">
+            <h2 class="section-title">Our Projects</h2>
+            <p>Discover our groundbreaking projects, including 'The Oji Show', a talk show that brings together the world's most influential voices for candid conversations that matter. Stay tuned for updates!</p>
+            <a href="project.html" class="cta-button">View Our Projects</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>HELP + INFO</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <!-- Add more links as needed based on your content for Help + Info -->
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>COMPANY</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="about.html#locations">Locations</a></li>
+                    <li><a href="about.html#founder">Founder</a></li>
+                    <!-- Add more links as needed based on your content for Company -->
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>WORK WITH US</h4>
+                <ul>
+                    <li><a href="project.html">Projects</a></li>
+                    <!-- Add more links as needed for partnerships, careers, etc. -->
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>PRIVACY + ACCESSIBILITY</h4>
+                <ul>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Use</a></li>
+                    <li><a href="cookies.html">Cookie Policy</a></li>
+                    <li><a href="imprint.html">Imprint</a></li>
+                    <!-- Add more links as needed for legal/accessibility -->
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 B.O.O.P Switzerland. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeBtn = document.querySelector('.close-btn');
+        const mobileLinks = document.querySelectorAll('.mobile-menu .nav-links a');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> 

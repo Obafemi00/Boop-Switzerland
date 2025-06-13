@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boop Switzerland - Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal1: #12706C;
+      --teal2: #0B5C57;
+      --teal3: #17918B;
+      --teal4: #073C39;
+      --teal5: #25A9A2;
+      --coral1: #E28C82;
+      --coral2: #C18A7A;
+      --coral3: #B06A5B;
+      --brown1: #6B3A25;
+      --brown2: #5B1C18;
+      --brown3: #8B3C2B;
+      --beige1: #D1B89A;
+      --beige2: #EFD6CC;
+      --grey1: #83756E;
+      --grey2: #1A2320;
+      --grey3: #25423C;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--beige2) 0%, var(--teal5) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(16, 60, 60, 0.12);
+      padding: 3rem 2rem 2.5rem 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    h1 {
+      color: var(--teal2);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+    .subtitle {
+      color: var(--teal3);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .palette {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .color-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+    }
+    .dot1 { background: var(--teal1); }
+    .dot2 { background: var(--teal3); }
+    .dot3 { background: var(--coral1); }
+    .dot4 { background: var(--brown1); }
+    .dot5 { background: var(--beige1); }
+    .dot6 { background: var(--grey1); }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    input, textarea {
+      padding: 0.7rem 1rem;
+      border: 1.5px solid var(--teal1);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: #f8f8f8;
+      transition: border 0.2s;
+    }
+    input:focus, textarea:focus {
+      border: 1.5px solid var(--teal3);
+      outline: none;
+    }
+    button {
+      background: var(--teal2);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: var(--teal3);
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 2rem 0.5rem 1.5rem 0.5rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="palette">
+      <span class="color-dot dot1"></span>
+      <span class="color-dot dot2"></span>
+      <span class="color-dot dot3"></span>
+      <span class="color-dot dot4"></span>
+      <span class="color-dot dot5"></span>
+      <span class="color-dot dot6"></span>
+    </div>
+    <h1>Boop Switzerland</h1>
+    <div class="subtitle">We're working on something amazing.<br>Our website is coming soon!</div>
+    <form id="contactForm">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" rows="3" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+      <div id="formMessage" style="margin-top:1rem;font-size:1rem;"></div>
+    </form>
+  </div>
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formMessage = document.getElementById('formMessage');
+      formMessage.textContent = '';
+      formMessage.style.color = '';
+      const data = new FormData(form);
+      try {
+        const response = await fetch('contact.php', {
+          method: 'POST',
+          body: data
+        });
+        const result = await response.json();
+        if (result.success) {
+          formMessage.textContent = 'Thank you! Your message has been sent.';
+          formMessage.style.color = '#17918B';
+          form.reset();
+        } else {
+          formMessage.textContent = result.error || 'Something went wrong. Please try again.';
+          formMessage.style.color = '#E28C82';
+        }
+      } catch (err) {
+        formMessage.textContent = 'Could not send message. Please try again later.';
+        formMessage.style.color = '#E28C82';
+      }
+    });
+  </script>
+</body>
+</html> 
