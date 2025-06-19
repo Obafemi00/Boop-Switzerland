@@ -4,6 +4,69 @@
         const closeBtn = document.querySelector('.close-btn');
         const mobileLinks = document.querySelectorAll('.mobile-menu .nav-links a');
 
+        // Typing Animation
+        const taglines = [
+            "Signature storytelling.",
+            "Global impact.",
+            "One Story at a Time..."
+        ];
+
+        class TypingAnimation {
+            constructor(element, words, typeSpeed = 100, eraseSpeed = 50, pauseTime = 2000) {
+                this.element = element;
+                this.words = words;
+                this.typeSpeed = typeSpeed;
+                this.eraseSpeed = eraseSpeed;
+                this.pauseTime = pauseTime;
+                this.currentWordIndex = 0;
+                this.isDeleting = false;
+                this.text = '';
+            }
+
+            type() {
+                const currentWord = this.words[this.currentWordIndex];
+                
+                if (this.isDeleting) {
+                    // Remove characters
+                    this.text = currentWord.substring(0, this.text.length - 1);
+                    this.element.classList.add('typing');
+                } else {
+                    // Add characters
+                    this.text = currentWord.substring(0, this.text.length + 1);
+                }
+
+                this.element.textContent = this.text;
+
+                let typeSpeed = this.isDeleting ? this.eraseSpeed : this.typeSpeed;
+
+                if (!this.isDeleting && this.text === currentWord) {
+                    // Word is complete, pause before deleting
+                    typeSpeed = this.pauseTime;
+                    this.isDeleting = true;
+                    this.element.classList.remove('typing');
+                    this.element.classList.add('paused');
+                } else if (this.isDeleting && this.text === '') {
+                    // Word is deleted, move to next word
+                    this.isDeleting = false;
+                    this.currentWordIndex = (this.currentWordIndex + 1) % this.words.length;
+                    typeSpeed = 500; // Pause before typing next word
+                    this.element.classList.remove('paused');
+                    this.element.classList.add('typing');
+                }
+
+                setTimeout(() => this.type(), typeSpeed);
+            }
+        }
+
+        // Initialize typing animation if element exists
+        document.addEventListener('DOMContentLoaded', function() {
+            const typingElement = document.querySelector('.typing-text');
+            if (typingElement) {
+                const typingAnimation = new TypingAnimation(typingElement, taglines);
+                typingAnimation.type();
+            }
+        });
+
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.add('active');
         });
@@ -78,78 +141,57 @@
             }
         });
 
-        // Interactive Services Section
+        // Check if we're on the home page or services page
+        const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+        
         const servicesData = {
             'tv-film': {
-                images: [
-                    '../images/tv-film-1.jpg',
-                    '../images/tv-film-2.jpg',
-                    '../images/tv-film-3.jpg'
-                ],
+                image: isHomePage ? './images/tv-film.jpg' : '../images/tv-film.jpg',
                 title: 'TV & Film Production',
                 description: 'Professional production services for television and film projects. We handle everything from concept to post-production, ensuring high-quality visual storytelling that captivates your audience.',
-                link: './pages/services.html'
+                link: isHomePage ? './pages/services.html' : './services.html'
             },
             'media-consulting': {
-                images: [
-                    '../images/media-consulting-1.jpg',
-                    '../images/media-consulting-2.jpg'
-                ],
+                image: isHomePage ? './images/media.jpg' : '../images/media.jpg',
                 title: 'Media Consulting',
                 description: 'Expert advice and strategic planning for media projects. We help you navigate the complex media landscape, optimize your presence, and achieve your communication goals.',
-                link: './pages/services.html'
+                link: isHomePage ? './pages/services.html' : './services.html'
             },
             'project-management': {
-                images: [
-                    '../images/project-management-1.jpg',
-                    '../images/project-management-2.jpg',
-                    '../images/project-management-3.jpg'
-                ],
+                image: isHomePage ? './images/project-management.jpg' : '../images/project-management.jpg',
                 title: 'Project Management',
                 description: 'Comprehensive project management for media initiatives, ensuring smooth execution from start to finish. Our meticulous approach guarantees projects are delivered on time and within budget.',
-                link: './pages/services.html'
+                link: isHomePage ? './pages/services.html' : './services.html'
             },
             'brand-collaborations': {
-                images: [
-                    '../images/brand-collaborations-1.jpg',
-                    '../images/brand-collaborations-2.jpg'
-                ],
+                image: isHomePage ? './images/brand-colab.jpg' : '../images/brand-colab.jpg',
                 title: 'Brand Collaborations',
                 description: 'Strategic partnerships to enhance brand visibility and impact. We connect brands with influential media personalities and platforms for mutually beneficial campaigns.',
-                link: './pages/services.html'
+                link: isHomePage ? './pages/services.html' : './services.html'
             },
             'talent-development': {
-                images: [
-                    '../images/talent-development-1.jpg',
-                    '../images/talent-development-2.jpg',
-                    '../images/talent-development-3.jpg'
-                ],
+                image: isHomePage ? './images/talent-dev.jpg' : '../images/talent-dev.jpg',
                 title: 'Talent Development',
                 description: 'Nurturing and developing talent in the media industry. We provide coaching, training, and strategic guidance to help individuals hone their skills and achieve their full potential.',
-                link: './pages/services.html'
+                link: isHomePage ? './pages/services.html' : './services.html'
             }
         };
 
         const categoryTabs = document.querySelectorAll('.category-tab');
         const carouselImage = document.querySelector('.carousel-image');
-        const imageCounter = document.querySelector('.image-counter');
         const serviceTitle = document.querySelector('.service-title');
         const serviceDescription = document.querySelector('.service-description');
         const serviceCtaButton = document.querySelector('.service-content-area .cta-button');
-        const leftArrow = document.querySelector('.left-arrow');
-        const rightArrow = document.querySelector('.right-arrow');
 
         let currentService = 'tv-film'; // Default active service
-        let currentImageIndex = 0;
 
         function updateServiceContent() {
             const data = servicesData[currentService];
-            carouselImage.src = data.images[currentImageIndex];
-            imageCounter.textContent = `${currentImageIndex + 1}/${data.images.length}`;
+            carouselImage.src = data.image;
             serviceTitle.textContent = data.title;
             serviceDescription.textContent = data.description;
-            serviceCtaButton.href = data.link; // Set the href for the CTA button
-            serviceCtaButton.textContent = `Explore ${data.title} \u2192`; // Update button text with arrow
+            serviceCtaButton.href = data.link;
+            serviceCtaButton.textContent = `Explore ${data.title} \u2192`;
         }
 
         categoryTabs.forEach(tab => {
@@ -157,21 +199,8 @@
                 categoryTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 currentService = tab.dataset.service;
-                currentImageIndex = 0; // Reset image index when changing service
                 updateServiceContent();
             });
-        });
-
-        leftArrow.addEventListener('click', () => {
-            const data = servicesData[currentService];
-            currentImageIndex = (currentImageIndex - 1 + data.images.length) % data.images.length;
-            updateServiceContent();
-        });
-
-        rightArrow.addEventListener('click', () => {
-            const data = servicesData[currentService];
-            currentImageIndex = (currentImageIndex + 1) % data.images.length;
-            updateServiceContent();
         });
 
         // Initialize content on load
@@ -187,4 +216,17 @@
                 const yPos = -(scrolled * speed);
                 element.style.transform = 'translateY(' + yPos + 'px)';
             });
-        }); 
+        });
+
+        // Home navbar scroll effect: white background only after scrolling past hero
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.clean-navbar');
+            const hero = document.querySelector('.home-hero');
+            if (!navbar || !hero) return;
+            const heroBottom = hero.getBoundingClientRect().bottom;
+            if (heroBottom <= 0) {
+                navbar.classList.add('beyond-hero');
+            } else {
+                navbar.classList.remove('beyond-hero');
+            }
+        });

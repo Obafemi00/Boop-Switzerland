@@ -6,9 +6,8 @@
     <title>B.O.O.P Switzerland</title>
     <link rel="stylesheet" href="./css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar">
+
+    <nav class="home-navbar clean-navbar">
         <div class="nav-content">
             <a href="./index.html" class="logo">B.O.O.P</a>
             <div class="nav-links">
@@ -35,18 +34,19 @@
         </div>
     </div>
 
-  
-<section class="hero">
-        <div class="hero-content">
-            <h1>B.O.O.P Switzerland</h1>
-            <p class="tagline">Your Partner in Media Excellence</p>
-            <div class="floating-words">
-                <div class="floating-word">Creativity</div>
-                <div class="floating-word">Innovation</div>
-                <div class="floating-word">Excellence</div>
-                <div class="floating-word">Quality</div>
+    <section class="home-hero clean-hero" style="background-image: url('./images/hero-image.jpg');">
+        <div class="hero-overlay"></div>
+        <div class="hero-center-box">
+            <h1><span class="brand-highlight">B.O.O.P Switzerland</span>-global media powerhouse</h1>
+            <div class="hero-tagline">
+                <div class="typing-container">
+                    <div class="typing-text"></div>
+                </div>
             </div>
-            <a href="./pages/contact.html" class="cta-button">Get in Touch</a>
+            <div class="hero-buttons">
+                <a href="./pages/contact.html" class="cta-button primary">Get in Touch &rarr;</a>
+                <a href="./pages/about.html" class="cta-button secondary">Learn more</a>
+            </div>
         </div>
     </section>
 
@@ -72,12 +72,9 @@
 
         <div class="service-content-area">
             <div class="image-carousel">
-                <button class="arrow left-arrow">&leftarrow;</button>
-                <img src="./images/placeholder-service.jpg" alt="Service Image" class="carousel-image">
-                <button class="arrow right-arrow">&rightarrow;</button>
+                <img src="./images/tv-film.jpg" alt="Service Image" class="carousel-image">
             </div>
             <div class="content-details">
-                <span class="image-counter">1/5</span>
                 <h3 class="service-title">TV & Film Production</h3>
                 <p class="service-description">Professional production services for television and film projects. We handle everything from concept to post-production, ensuring high-quality visual storytelling that captivates your audience.</p>
                 <a href="./pages/services.html" class="cta-button">Explore TV & Film Production &rightarrow;</a>
@@ -127,5 +124,18 @@
     </footer>
 
     <script src="./js/script.js"></script>
+    <script>
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.clean-navbar');
+        const hero = document.querySelector('.home-hero');
+        if (!navbar || !hero) return;
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        if (heroBottom <= 0) {
+            navbar.classList.add('beyond-hero');
+        } else {
+            navbar.classList.remove('beyond-hero');
+        }
+    });
+    </script>
 </body>
 </html> 
