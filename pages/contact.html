@@ -45,28 +45,51 @@
     </div>
 
     <!-- Contact Section -->
-    <section class="section-content">
+    <section class="contact-section redesigned-section animate">
         <h1 class="section-title">Get in Touch</h1>
-        <form class="contact-form" id="contactForm">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
+        <div class="contact-flex">
+            <div class="contact-info-panel">
+                <h2>Contact Information</h2>
+                <div class="contact-email-list">
+                    <div class="contact-email-item">
+                        <span class="contact-email-icon">📧</span>
+                        <span class="contact-email-label">General:</span>
+                        <a href="mailto:info@boopswitzerland.com">info@boopswitzerland.com</a>
+                    </div>
+                    <div class="contact-email-item">
+                        <span class="contact-email-icon">👩‍💼</span>
+                        <span class="contact-email-label">Oji:</span>
+                        <a href="mailto:oji@boopswitzerland.com">oji@boopswitzerland.com</a>
+                    </div>
+                    <div class="contact-email-item">
+                        <span class="contact-email-icon">👔</span>
+                        <span class="contact-email-label">Chairman:</span>
+                        <a href="mailto:chairman@boopswitzerland.com">chairman@boopswitzerland.com</a>
+                    </div>
+                </div>
+                <div class="contact-note">We aim to respond within 24 hours.</div>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="subject">Subject</label>
-                <input type="text" id="subject" name="subject" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" required></textarea>
-            </div>
-            <button type="submit" class="cta-button">Send Message</button>
-            <div id="formStatus" class="form-status"></div>
-        </form>
+            <form class="contact-form beautiful-form" id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" required placeholder=" ">
+                    <label for="name">Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" required placeholder=" ">
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="subject" name="subject" required placeholder=" ">
+                    <label for="subject">Subject</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" required placeholder=" "></textarea>
+                    <label for="message">Message</label>
+                </div>
+                <button type="submit" class="cta-button">Send Message</button>
+                <div id="formStatus" class="form-status"></div>
+            </form>
+        </div>
     </section>
 
     <!-- Footer -->
