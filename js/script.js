@@ -193,46 +193,71 @@
         const serviceContentArea = document.querySelector('.service-content-area');
 
         let currentService = 'tv-film'; // Default active service
+        let isInitialLoad = true;
 
         function updateServiceContent() {
             const data = servicesData[currentService];
-            carouselImage.src = data.image;
-            serviceTitle.textContent = data.title;
-            serviceDescription.textContent = data.description;
-            serviceCtaButton.href = data.link;
-            serviceCtaButton.textContent = `Explore ${data.title} \u2192`;
+            const contentElements = [carouselImage, serviceTitle, serviceDescription, serviceCtaButton];
+
+            // Function to fade in elements
+            const fadeIn = () => {
+                if (carouselImage) carouselImage.style.opacity = '1';
+                if (serviceTitle) serviceTitle.style.opacity = '1';
+                if (serviceDescription) serviceDescription.style.opacity = '1';
+                if (serviceCtaButton) serviceCtaButton.style.opacity = '1';
+            };
+
+            // On initial page load, just set the content without animation
+            if (isInitialLoad) {
+                if (carouselImage) carouselImage.src = data.image;
+                if (serviceTitle) serviceTitle.textContent = data.title;
+                if (serviceDescription) serviceDescription.textContent = data.description;
+                if (serviceCtaButton) {
+                    serviceCtaButton.href = data.link;
+                    serviceCtaButton.textContent = `Explore ${data.title} \u2192`;
+                }
+                fadeIn();
+                isInitialLoad = false;
+                return;
+            }
+
+            // For subsequent clicks, fade out, update, then fade in
+            contentElements.forEach(el => el && (el.style.opacity = '0'));
+
+            setTimeout(() => {
+                if (carouselImage) carouselImage.src = data.image;
+                if (serviceTitle) serviceTitle.textContent = data.title;
+                if (serviceDescription) serviceDescription.textContent = data.description;
+                if (serviceCtaButton) {
+                    serviceCtaButton.href = data.link;
+                    serviceCtaButton.textContent = `Explore ${data.title} \u2192`;
+                }
+                
+                // Use image.onload to ensure the image is ready before fading in
+                if (carouselImage) {
+                    carouselImage.onload = fadeIn;
+                } else {
+                    fadeIn();
+                }
+            }, 350); // Corresponds to CSS transition time
         }
 
         categoryTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const newService = tab.dataset.service;
-                if (newService === currentService) return; // Do nothing if already active
+                if (newService === currentService) return;
 
-                // Update active tab state
                 categoryTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-
-                // Fade out content
-                if (serviceContentArea) {
-                    serviceContentArea.classList.remove('fade-in');
-                    serviceContentArea.classList.add('fade-out');
-                }
-
-                // Wait for fade out, then update and fade in
-                setTimeout(() => {
-                    currentService = newService;
-                    updateServiceContent();
-
-                    if (serviceContentArea) {
-                        serviceContentArea.classList.remove('fade-out');
-                        serviceContentArea.classList.add('fade-in');
-                    }
-                }, 500); // Should match the CSS animation duration
+                currentService = tab.dataset.service;
+                updateServiceContent();
             });
         });
 
         // Initialize content on load
-        updateServiceContent();
+        if (serviceContentArea) {
+            updateServiceContent();
+        }
 
         // Paralax effect
         document.addEventListener('scroll', function() {
