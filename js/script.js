@@ -177,11 +177,20 @@
             }
         };
 
+        // Preload service images to prevent flashing on change
+        if (isHomePage || window.location.pathname.includes('services.html')) {
+            Object.values(servicesData).forEach(service => {
+                const img = new Image();
+                img.src = service.image;
+            });
+        }
+
         const categoryTabs = document.querySelectorAll('.category-tab');
         const carouselImage = document.querySelector('.carousel-image');
         const serviceTitle = document.querySelector('.service-title');
         const serviceDescription = document.querySelector('.service-description');
         const serviceCtaButton = document.querySelector('.service-content-area .cta-button');
+        const serviceContentArea = document.querySelector('.service-content-area');
 
         let currentService = 'tv-film'; // Default active service
 
@@ -196,10 +205,29 @@
 
         categoryTabs.forEach(tab => {
             tab.addEventListener('click', () => {
+                const newService = tab.dataset.service;
+                if (newService === currentService) return; // Do nothing if already active
+
+                // Update active tab state
                 categoryTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                currentService = tab.dataset.service;
-                updateServiceContent();
+
+                // Fade out content
+                if (serviceContentArea) {
+                    serviceContentArea.classList.remove('fade-in');
+                    serviceContentArea.classList.add('fade-out');
+                }
+
+                // Wait for fade out, then update and fade in
+                setTimeout(() => {
+                    currentService = newService;
+                    updateServiceContent();
+
+                    if (serviceContentArea) {
+                        serviceContentArea.classList.remove('fade-out');
+                        serviceContentArea.classList.add('fade-in');
+                    }
+                }, 500); // Should match the CSS animation duration
             });
         });
 
@@ -230,3 +258,47 @@
                 navbar.classList.remove('beyond-hero');
             }
         });
+
+        const leftArrow = document.querySelector('.left-arrow');
+        const rightArrow = document.querySelector('.right-arrow');
+        const serviceKeys = Object.keys(servicesData);
+
+        function goToService(index) {
+            // Remove animation class for fade-out
+            const contentArea = document.querySelector('.service-content-area');
+            if (contentArea) {
+                contentArea.classList.remove('fade-in');
+                contentArea.classList.add('fade-out');
+            }
+            setTimeout(() => {
+                currentService = serviceKeys[index];
+                // Update active tab immediately
+                categoryTabs.forEach((tab, i) => {
+                    tab.classList.toggle('active', i === index);
+                });
+                updateServiceContent();
+                if (contentArea) {
+                    contentArea.classList.remove('fade-out');
+                    contentArea.classList.add('fade-in');
+                }
+            }, 150); // Duration matches CSS fade-out
+        }
+
+        if (leftArrow && rightArrow) {
+            leftArrow.addEventListener('click', () => {
+                let currentIndex = serviceKeys.indexOf(currentService);
+                let prevIndex = (currentIndex - 1 + serviceKeys.length) % serviceKeys.length;
+                goToService(prevIndex);
+            });
+            rightArrow.addEventListener('click', () => {
+                let currentIndex = serviceKeys.indexOf(currentService);
+                let nextIndex = (currentIndex + 1) % serviceKeys.length;
+                goToService(nextIndex);
+            });
+        }
+
+        // On page load, add fade-in to content area
+        const contentAreaInit = document.querySelector('.service-content-area');
+        if (contentAreaInit) {
+            contentAreaInit.classList.add('fade-in');
+        }
