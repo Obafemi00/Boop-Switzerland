@@ -3890,3 +3890,30 @@ html {
         min-height: 40px;
     }
 }
+
+.oji-svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}
+.oji-svg-container svg {
+    width: 110px;
+    height: 60px;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+    background: #181A1B;
+    padding: 6px 12px;
+}
+@media (max-width: 600px) {
+    .oji-svg-container svg {
+        width: 80px;
+        height: 44px;
+        padding: 4px 6px;
+    }
+    .oji-svg-container {
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+}
