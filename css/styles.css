@@ -2073,7 +2073,10 @@ html {
 .service-title,
 .service-description,
 .service-content-area .cta-button {
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.35s ease-in-out;
+    /* Promote to own layer to prevent flash */
+    will-change: opacity;
+    transform: translateZ(0);
 }
 
 .carousel-image {
