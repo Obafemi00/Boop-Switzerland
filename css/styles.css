@@ -3917,3 +3917,92 @@ html {
         margin-top: 1rem;
     }
 }
+
+.locations-section {
+    margin: 4rem 0 2rem 0;
+    padding: 2.5rem 0 1.5rem 0;
+    background: var(--light-bg);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.07);
+    text-align: center;
+}
+.locations-section .section-title {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: var(--primary-color);
+    letter-spacing: 0.01em;
+}
+.locations-grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.location-card {
+    background: #181A1B;
+    color: #fff;
+    border-radius: 22px;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+    padding: 2rem 2.2rem 1.5rem 2.2rem;
+    min-width: 220px;
+    max-width: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
+    opacity: 0;
+    transform: translateY(30px);
+}
+.locations-section.animate .location-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+}
+.location-card:hover {
+    transform: translateY(-8px) scale(1.04) rotate(-1deg);
+    box-shadow: 0 8px 32px 0 rgba(23,145,139,0.18);
+}
+.location-flag {
+    font-size: 2.5rem;
+    margin-bottom: 0.7rem;
+}
+.location-country {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.01em;
+}
+.location-company {
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: var(--teal5);
+    letter-spacing: 0.01em;
+}
+@media (max-width: 900px) {
+    .locations-grid {
+        gap: 1.2rem;
+    }
+    .location-card {
+        min-width: 170px;
+        padding: 1.2rem 1rem 1rem 1rem;
+    }
+}
+@media (max-width: 600px) {
+    .locations-section {
+        padding: 1.2rem 0 0.5rem 0;
+        margin: 2rem 0 1rem 0;
+    }
+    .locations-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    .location-card {
+        width: 90%;
+        min-width: unset;
+        max-width: unset;
+        padding: 1.2rem 0.7rem 1rem 0.7rem;
+    }
+}
