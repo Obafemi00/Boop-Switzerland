@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <section class="home-hero clean-hero" style="background-image: url('./images/hero-image.jpg');">
+    <section class="home-hero clean-hero" style="background-image: url('./images/hero-image-low.jpg');">
         <div class="hero-overlay"></div>
         <div class="hero-center-box">
             <h1><span class="brand-highlight">B.O.O.P Switzerland</span>-global media powerhouse</h1>
@@ -71,16 +71,21 @@
             </div>
         </div>
 
-        <div class="service-content-area">
-            <div class="image-carousel">
-                <button class="arrow left-arrow" aria-label="Previous Service">&#8249;</button>
-                <img src="./images/tv-film.jpg" alt="Service Image" class="carousel-image">
-                <button class="arrow right-arrow" aria-label="Next Service">&#8250;</button>
+        <div class="service-content-container">
+            <div class="loader-overlay">
+                <div class="spinner"></div>
             </div>
-            <div class="content-details">
-                <h3 class="service-title">TV & Film Production</h3>
-                <p class="service-description">Professional production services for television and film projects. We handle everything from concept to post-production, ensuring high-quality visual storytelling that captivates your audience.</p>
-                <a href="./pages/services.html" class="cta-button">Explore TV & Film Production &rightarrow;</a>
+            <div class="service-content-area">
+                <div class="image-carousel">
+                    <button class="arrow left-arrow" aria-label="Previous Service">&#8249;</button>
+                    <img src="./images/tv-film.jpg" alt="Service Image" class="carousel-image">
+                    <button class="arrow right-arrow" aria-label="Next Service">&#8250;</button>
+                </div>
+                <div class="content-details">
+                    <h3 class="service-title">TV & Film Production</h3>
+                    <p class="service-description">Professional production services for television and film projects. We handle everything from concept to post-production, ensuring high-quality visual storytelling that captivates your audience.</p>
+                    <a href="./pages/services.html" class="cta-button">Explore TV & Film Production &rightarrow;</a>
+                </div>
             </div>
         </div>
     </section>
@@ -140,5 +145,14 @@
         }
     });
     </script>
+
+    <div id="cookie-banner">
+        <p>
+            We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+            <a href="./pages/cookies.html">Read our Cookie Policy</a>.
+        </p>
+        <button id="cookie-accept-btn">Accept All</button>
+    </div>
+
 </body>
 </html> 

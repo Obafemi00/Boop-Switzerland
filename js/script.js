@@ -191,72 +191,77 @@
         const serviceDescription = document.querySelector('.service-description');
         const serviceCtaButton = document.querySelector('.service-content-area .cta-button');
         const serviceContentArea = document.querySelector('.service-content-area');
+        const loaderOverlay = document.querySelector('.loader-overlay');
 
         let currentService = 'tv-film'; // Default active service
-        let isInitialLoad = true;
+        let isTransitioning = false;
 
-        function updateServiceContent() {
-            const data = servicesData[currentService];
-            const contentElements = [carouselImage, serviceTitle, serviceDescription, serviceCtaButton];
+        function updateServiceContent(newService, startTime) {
+            const data = servicesData[newService];
 
-            // Function to fade in elements
-            const fadeIn = () => {
-                if (carouselImage) carouselImage.style.opacity = '1';
-                if (serviceTitle) serviceTitle.style.opacity = '1';
-                if (serviceDescription) serviceDescription.style.opacity = '1';
-                if (serviceCtaButton) serviceCtaButton.style.opacity = '1';
-            };
-
-            // On initial page load, just set the content without animation
-            if (isInitialLoad) {
-                if (carouselImage) carouselImage.src = data.image;
-                if (serviceTitle) serviceTitle.textContent = data.title;
-                if (serviceDescription) serviceDescription.textContent = data.description;
-                if (serviceCtaButton) {
-                    serviceCtaButton.href = data.link;
-                    serviceCtaButton.textContent = `Explore ${data.title} \u2192`;
-                }
-                fadeIn();
-                isInitialLoad = false;
-                return;
+            // Update text content first
+            if (serviceTitle) serviceTitle.textContent = data.title;
+            if (serviceDescription) serviceDescription.textContent = data.description;
+            if (serviceCtaButton) {
+                serviceCtaButton.href = data.link;
+                serviceCtaButton.textContent = `Explore ${data.title} \u2192`;
             }
 
-            // For subsequent clicks, fade out, update, then fade in
-            contentElements.forEach(el => el && (el.style.opacity = '0'));
+            // Handle image loading
+            if (carouselImage) {
+                carouselImage.src = data.image;
+                carouselImage.onload = () => {
+                    const elapsedTime = Date.now() - startTime;
+                    const remainingTime = Math.max(0, 200 - elapsedTime);
 
-            setTimeout(() => {
-                if (carouselImage) carouselImage.src = data.image;
-                if (serviceTitle) serviceTitle.textContent = data.title;
-                if (serviceDescription) serviceDescription.textContent = data.description;
-                if (serviceCtaButton) {
-                    serviceCtaButton.href = data.link;
-                    serviceCtaButton.textContent = `Explore ${data.title} \u2192`;
-                }
-                
-                // Use image.onload to ensure the image is ready before fading in
-                if (carouselImage) {
-                    carouselImage.onload = fadeIn;
-                } else {
-                    fadeIn();
-                }
-            }, 350); // Corresponds to CSS transition time
+                    setTimeout(() => {
+                        if (loaderOverlay) loaderOverlay.classList.remove('active');
+                        if (serviceContentArea) serviceContentArea.classList.remove('loading');
+                        isTransitioning = false;
+                    }, remainingTime);
+                };
+            } else {
+                // If no image, handle timing similarly
+                const elapsedTime = Date.now() - startTime;
+                const remainingTime = Math.max(0, 200 - elapsedTime);
+                setTimeout(() => {
+                    if (loaderOverlay) loaderOverlay.classList.remove('active');
+                    if (serviceContentArea) serviceContentArea.classList.remove('loading');
+                    isTransitioning = false;
+                }, remainingTime);
+            }
         }
 
         categoryTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const newService = tab.dataset.service;
-                if (newService === currentService) return;
+                if (newService === currentService || isTransitioning) return;
+
+                isTransitioning = true;
+                const startTime = Date.now();
+
+                // Show loader and blur content immediately
+                if (loaderOverlay) loaderOverlay.classList.add('active');
+                if (serviceContentArea) serviceContentArea.classList.add('loading');
 
                 categoryTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                currentService = tab.dataset.service;
-                updateServiceContent();
+                
+                currentService = newService;
+                updateServiceContent(newService, startTime);
             });
         });
 
-        // Initialize content on load
+        // Initialize content on load without loader
         if (serviceContentArea) {
-            updateServiceContent();
+            const initialData = servicesData[currentService];
+            if (carouselImage) carouselImage.src = initialData.image;
+            if (serviceTitle) serviceTitle.textContent = initialData.title;
+            if (serviceDescription) serviceDescription.textContent = initialData.description;
+            if (serviceCtaButton) {
+                serviceCtaButton.href = initialData.link;
+                serviceCtaButton.textContent = `Explore ${initialData.title} \u2192`;
+            }
         }
 
         // Paralax effect
@@ -284,6 +289,46 @@
             }
         });
 
+        // Progressive image loading for hero section
+        document.addEventListener('DOMContentLoaded', () => {
+            const hero = document.querySelector('.home-hero');
+            if (!hero) return;
+
+            const highQualityImage = new Image();
+            highQualityImage.src = './images/hero-image-high.jpg';
+
+            highQualityImage.onload = () => {
+                hero.style.backgroundImage = `url('${highQualityImage.src}')`;
+                hero.classList.add('loaded');
+            };
+        });
+
+        // Cookie Consent Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const banner = document.getElementById('cookie-banner');
+            const acceptBtn = document.getElementById('cookie-accept-btn');
+
+            if (!banner || !acceptBtn) return;
+
+            // Check if cookie is already set
+            if (document.cookie.split(';').some((item) => item.trim().startsWith('cookie_consent='))) {
+                return;
+            }
+
+            // Show the banner if no cookie
+            banner.classList.add('visible');
+
+            acceptBtn.addEventListener('click', () => {
+                // Set cookie for 1 year
+                const d = new Date();
+                d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();
+                document.cookie = "cookie_consent=true;" + expires + ";path=/";
+
+                banner.style.display = 'none';
+            });
+        });
+
         const leftArrow = document.querySelector('.left-arrow');
         const rightArrow = document.querySelector('.right-arrow');
         const serviceKeys = Object.keys(servicesData);
@@ -301,7 +346,7 @@
                 categoryTabs.forEach((tab, i) => {
                     tab.classList.toggle('active', i === index);
                 });
-                updateServiceContent();
+                updateServiceContent(currentService, Date.now());
                 if (contentArea) {
                     contentArea.classList.remove('fade-out');
                     contentArea.classList.add('fade-in');
