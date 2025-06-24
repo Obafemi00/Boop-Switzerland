@@ -11,6 +11,11 @@ require 'path/to/phpmailer/src/SMTP.php';
 
 header('Content-Type: application/json');
 
+require_once __DIR__ . '/../vendor/autoload.php'; // Adjust path if needed
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); // Adjust path if needed
+$dotenv->load();
+
 // Set your email address
 $to = 'info@boopswitzerland.com';
 
@@ -30,13 +35,12 @@ $mail = new PHPMailer(true);
 try {
     // Server settings
     $mail->isSMTP();
-    $mail->Host = 'mail.boopswitzerland.com'; // <-- Replace with your SMTP host
-    $mail->SMTPAuth = true;
-    $mail->Username = 'info@boopswitzerland.com'; // <-- Replace with your SMTP username
-    $mail->Password = '?L!MiN3^Az.Q8n2'; // <-- Replace with your SMTP password
-    $mail->SMTPSecure = 'ssl'; // Or 'tls' (ask your host)
-    $mail->Port = 465; // Or 587 for TLS
-
+$mail->SMTPAuth   = true;
+$mail->Host       = $_ENV['SMTP_HOST'];
+$mail->Username   = $_ENV['SMTP_USERNAME'];
+$mail->Password   = $_ENV['SMTP_PASSWORD'];
+$mail->SMTPSecure = $_ENV['SMTP_SECURE'];
+$mail->Port       = $_ENV['SMTP_PORT'];
     // Recipients
     $mail->setFrom('info@boopswitzerland.com', 'Boop Switzerland'); // Use your domain email
     $mail->addAddress('info@boopswitzerland.com'); // Where you want to receive the email
@@ -44,7 +48,7 @@ try {
 
     // Content
     $mail->isHTML(false);
-    $mail->Subject = 'New message from Boop Switzerland Coming Soon page';
+    $mail->Subject = 'New message from Boop Switzerland Contact Form';
     $mail->Body    = "Name: $name\nEmail: $email\nMessage:\n$message";
 
     $mail->send();

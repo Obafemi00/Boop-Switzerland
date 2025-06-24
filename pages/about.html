@@ -51,7 +51,7 @@
     </section>
 
     <section class="our-mission-section feature-section animate">
-        <div class="section-content">
+        <div class="section-content" id="our-story-section">
             <h2 class="section-title">Our Mission: Crafting Narratives That Matter</h2>
             <div class="content-wrapper reverse-order">
                 <div class="image-placeholder">
@@ -125,6 +125,12 @@
                     <li><a href="./contact.html">Contact Us</a></li>
                 </ul>
             </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:info@boopswitzerland.com">info@boopswitzerland.com</a></li>
+                </ul>
+            </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 B.O.O.P Switzerland. All rights reserved.</p>
@@ -134,11 +140,18 @@
     <script src="../js/script.js"></script>
 
     <div id="cookie-banner">
-        <p>
-            We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
-            <a href="./cookies.html">Read our Cookie Policy</a>.
-        </p>
-        <button id="cookie-accept-btn">Accept All</button>
+        <div class="cookie-container">
+            <div class="cookie-text">
+                <h4>We care about your privacy</h4>
+                <p>
+                    We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+                </p>
+            </div>
+            <div class="cookie-actions">
+                <button id="cookie-decline-btn" class="cookie-btn secondary">Decline</button>
+                <button id="cookie-accept-btn" class="cookie-btn primary">Accept All</button>
+            </div>
+        </div>
     </div>
 
 </body>

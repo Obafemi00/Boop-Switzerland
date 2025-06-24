@@ -112,32 +112,26 @@
         document.addEventListener('DOMContentLoaded', function() {
             const contactForm = document.getElementById('contactForm');
             if (contactForm) {
-                contactForm.addEventListener('submit', async function(e) {
+                contactForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    const form = e.target;
-                    const formStatus = document.getElementById('formStatus');
-                    formStatus.textContent = '';
-                    formStatus.style.color = '';
-                    const data = new FormData(form);
-                    try {
-                        const response = await fetch('../php/contact.php', {
-                            method: 'POST',
-                            body: data
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('6LcEXGorAAAAAAPGNhA4T_UDXs0zD4b9lXPomXFNa', {action: 'contact'}).then(function(token) {
+                            document.getElementById('g-recaptcha-response').value = token;
+                            form.submit();
                         });
-                        const result = await response.json();
-                        if (result.success) {
-                            formStatus.textContent = 'Thank you! Your message has been sent.';
-                            formStatus.style.color = '#17918B';
-                            form.reset();
-                        } else {
-                            formStatus.textContent = result.error || 'Something went wrong. Please try again.';
-                            formStatus.style.color = '#E28C82';
-                        }
-                    } catch (err) {
-                        formStatus.textContent = 'Could not send message. Please try again later.';
-                        formStatus.style.color = '#E28C82';
-                    }
+                    });
                 });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var jsToken = document.getElementById('js_token');
+            if (jsToken) {
+                jsToken.value = Date.now().toString(36) + Math.random().toString(36).substr(2);
+            }
+            var formTime = document.getElementById('form_time');
+            if (formTime) {
+                formTime.value = Date.now();
             }
         });
 
@@ -149,31 +143,31 @@
                 image: isHomePage ? './images/tv-film.jpg' : '../images/tv-film.jpg',
                 title: 'TV & Film Production',
                 description: 'Professional production services for television and film projects. We handle everything from concept to post-production, ensuring high-quality visual storytelling that captivates your audience.',
-                link: isHomePage ? './pages/services.html' : './services.html'
+                link: isHomePage ? './pages/service-tv-film.html' : './service-tv-film.html'
             },
             'media-consulting': {
                 image: isHomePage ? './images/media.jpg' : '../images/media.jpg',
                 title: 'Media Consulting',
                 description: 'Expert advice and strategic planning for media projects. We help you navigate the complex media landscape, optimize your presence, and achieve your communication goals.',
-                link: isHomePage ? './pages/services.html' : './services.html'
+                link: isHomePage ? './pages/service-media-consulting.html' : './service-media-consulting.html'
             },
             'project-management': {
                 image: isHomePage ? './images/project-management.jpg' : '../images/project-management.jpg',
                 title: 'Project Management',
                 description: 'Comprehensive project management for media initiatives, ensuring smooth execution from start to finish. Our meticulous approach guarantees projects are delivered on time and within budget.',
-                link: isHomePage ? './pages/services.html' : './services.html'
+                link: isHomePage ? './pages/service-project-management.html' : './service-project-management.html'
             },
             'brand-collaborations': {
                 image: isHomePage ? './images/brand-colab.jpg' : '../images/brand-colab.jpg',
                 title: 'Brand Collaborations',
                 description: 'Strategic partnerships to enhance brand visibility and impact. We connect brands with influential media personalities and platforms for mutually beneficial campaigns.',
-                link: isHomePage ? './pages/services.html' : './services.html'
+                link: isHomePage ? './pages/service-brand-collaborations.html' : './service-brand-collaborations.html'
             },
             'talent-development': {
                 image: isHomePage ? './images/talent-dev.jpg' : '../images/talent-dev.jpg',
                 title: 'Talent Development',
                 description: 'Nurturing and developing talent in the media industry. We provide coaching, training, and strategic guidance to help individuals hone their skills and achieve their full potential.',
-                link: isHomePage ? './pages/services.html' : './services.html'
+                link: isHomePage ? './pages/service-talent-development.html' : './service-talent-development.html'
             }
         };
 
@@ -253,7 +247,8 @@
         });
 
         // Initialize content on load without loader
-        if (serviceContentArea) {
+        const contentAreaInit = document.querySelector('.service-content-area');
+        if (contentAreaInit) {
             const initialData = servicesData[currentService];
             if (carouselImage) carouselImage.src = initialData.image;
             if (serviceTitle) serviceTitle.textContent = initialData.title;
@@ -262,6 +257,10 @@
                 serviceCtaButton.href = initialData.link;
                 serviceCtaButton.textContent = `Explore ${initialData.title} \u2192`;
             }
+            // Add a small delay to ensure content is rendered before fading in on load
+            setTimeout(() => {
+                contentAreaInit.classList.add('fade-in');
+            }, 100);
         }
 
         // Paralax effect
@@ -307,11 +306,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             const banner = document.getElementById('cookie-banner');
             const acceptBtn = document.getElementById('cookie-accept-btn');
+            const declineBtn = document.getElementById('cookie-decline-btn');
 
-            if (!banner || !acceptBtn) return;
+            if (!banner || !acceptBtn || !declineBtn) return;
 
             // Check if cookie is already set
-            if (document.cookie.split(';').some((item) => item.trim().startsWith('cookie_consent='))) {
+            if (document.cookie.includes('cookie_consent=')) {
                 return;
             }
 
@@ -319,13 +319,16 @@
             banner.classList.add('visible');
 
             acceptBtn.addEventListener('click', () => {
-                // Set cookie for 1 year
                 const d = new Date();
                 d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000));
                 let expires = "expires=" + d.toUTCString();
                 document.cookie = "cookie_consent=true;" + expires + ";path=/";
+                banner.classList.remove('visible');
+            });
 
-                banner.style.display = 'none';
+            declineBtn.addEventListener('click', () => {
+                document.cookie = "cookie_consent=false;path=/";
+                banner.classList.remove('visible');
             });
         });
 
@@ -367,8 +370,31 @@
             });
         }
 
-        // On page load, add fade-in to content area
-        const contentAreaInit = document.querySelector('.service-content-area');
-        if (contentAreaInit) {
-            contentAreaInit.classList.add('fade-in');
+        // Add Swipe functionality for Touch Devices
+        const carousel = document.querySelector('.image-carousel');
+        if (carousel) {
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            carousel.addEventListener('touchstart', (event) => {
+                touchStartX = event.changedTouches[0].screenX;
+            }, { passive: true });
+
+            carousel.addEventListener('touchend', (event) => {
+                touchEndX = event.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+
+            const handleSwipe = () => {
+                const swipeThreshold = 50; // Minimum distance for a swipe
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // Swiped left
+                    rightArrow.click();
+                }
+                
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    // Swiped right
+                    leftArrow.click();
+                }
+            };
         }

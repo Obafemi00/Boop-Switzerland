@@ -6,6 +6,7 @@
     <title>Contact Us - B.O.O.P Switzerland</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcEXGorAAAAAAPGNhA4T_UDXs0zD4b9lXPomXFNa"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -87,8 +88,11 @@
                     <textarea id="message" name="message" required placeholder=" "></textarea>
                     <label for="message">Message</label>
                 </div>
+                <input type="text" name="website" id="website" style="display:none" tabindex="-1" autocomplete="off">
+                <input type="hidden" name="form_time" id="form_time" value="">
+                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                 <button type="submit" class="cta-button">Send Message</button>
-                <div id="formStatus" class="form-status"></div>
+                <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
             </form>
         </div>
     </section>
@@ -119,6 +123,12 @@
                     <li><a href="./contact.html">Contact Us</a></li>
                 </ul>
             </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:info@boopswitzerland.com">info@boopswitzerland.com</a></li>
+                </ul>
+            </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 B.O.O.P Switzerland. All rights reserved.</p>
@@ -128,11 +138,18 @@
     <script src="../js/script.js"></script>
 
     <div id="cookie-banner">
-        <p>
-            We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
-            <a href="./cookies.html">Read our Cookie Policy</a>.
-        </p>
-        <button id="cookie-accept-btn">Accept All</button>
+        <div class="cookie-container">
+            <div class="cookie-text">
+                <h4>We care about your privacy</h4>
+                <p>
+                    We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+                </p>
+            </div>
+            <div class="cookie-actions">
+                <button id="cookie-decline-btn" class="cookie-btn secondary">Decline</button>
+                <button id="cookie-accept-btn" class="cookie-btn primary">Accept All</button>
+            </div>
+        </div>
     </div>
 
 </body>

@@ -77,9 +77,13 @@
             </div>
             <div class="service-content-area">
                 <div class="image-carousel">
-                    <button class="arrow left-arrow" aria-label="Previous Service">&#8249;</button>
+                    <button class="arrow left-arrow" aria-label="Previous Service">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
                     <img src="./images/tv-film.jpg" alt="Service Image" class="carousel-image">
-                    <button class="arrow right-arrow" aria-label="Next Service">&#8250;</button>
+                    <button class="arrow right-arrow" aria-label="Next Service">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
                 </div>
                 <div class="content-details">
                     <h3 class="service-title">TV & Film Production</h3>
@@ -125,6 +129,12 @@
                     <li><a href="./pages/contact.html">Contact Us</a></li>
                 </ul>
             </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:info@boopswitzerland.com">info@boopswitzerland.com</a></li>
+                </ul>
+            </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2024 B.O.O.P Switzerland. All rights reserved.</p>
@@ -147,11 +157,18 @@
     </script>
 
     <div id="cookie-banner">
-        <p>
-            We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
-            <a href="./pages/cookies.html">Read our Cookie Policy</a>.
-        </p>
-        <button id="cookie-accept-btn">Accept All</button>
+        <div class="cookie-container">
+            <div class="cookie-text">
+                <h4>We care about your privacy</h4>
+                <p>
+                    We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+                </p>
+            </div>
+            <div class="cookie-actions">
+                <button id="cookie-decline-btn" class="cookie-btn secondary">Decline</button>
+                <button id="cookie-accept-btn" class="cookie-btn primary">Accept All</button>
+            </div>
+        </div>
     </div>
 
 </body>
