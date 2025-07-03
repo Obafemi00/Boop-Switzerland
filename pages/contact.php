@@ -1,3 +1,13 @@
+<?php
+// Composer autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Load environment variables
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+$recaptcha_site_key = $_ENV['RECAPTCHA_SITE_KEY'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +16,10 @@
     <title>Contact Us - B.O.O.P Switzerland</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://www.google.com/recaptcha/api.js?render=6LcEXGorAAAAAAPGNhA4T_UDXs0zD4b9lXPomXFNa"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=<?php echo htmlspecialchars($recaptcha_site_key); ?>"></script>
+    <script>
+        const RECAPTCHA_SITE_KEY = '<?php echo htmlspecialchars($recaptcha_site_key); ?>';
+    </script>
 </head>
 <body>
     <!-- Navigation -->

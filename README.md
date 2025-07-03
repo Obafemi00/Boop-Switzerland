@@ -29,7 +29,7 @@ The website evolved from a single "Coming Soon" page to a multi-page application
 *   `pages/about.html`: "About Us" section with company story, team, and values.
 *   `pages/services.html`: Detailed "Our Services" section with specific service cards and SVG icons.
 *   `pages/project.html`: "Our Projects" section with details on "The Oji Show".
-*   `pages/contact.html`: "Contact Us" page with a contact form.
+*   `pages/contact.php`: "Contact Us" page with a contact form.
 
 ### Styling and Interactivity
 

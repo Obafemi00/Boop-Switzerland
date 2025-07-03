@@ -110,14 +110,33 @@
 
         // Contact Form
         document.addEventListener('DOMContentLoaded', function() {
-            const contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
+            const form = document.getElementById('contactForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
                     e.preventDefault();
+
                     grecaptcha.ready(function() {
-                        grecaptcha.execute('6LcEXGorAAAAAAPGNhA4T_UDXs0zD4b9lXPomXFNa', {action: 'contact'}).then(function(token) {
+                        grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'}).then(function(token) {
                             document.getElementById('g-recaptcha-response').value = token;
-                            form.submit();
+
+                            const formData = new FormData(form);
+
+                            fetch('../php/contact.php', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                const status = document.getElementById('formStatus');
+                                status.textContent = data.message;
+                                status.style.color = data.success ? 'green' : 'red';
+                                if (data.success) form.reset();
+                            })
+                            .catch(() => {
+                                const status = document.getElementById('formStatus');
+                                status.textContent = 'An error occurred. Please try again.';
+                                status.style.color = 'red';
+                            });
                         });
                     });
                 });

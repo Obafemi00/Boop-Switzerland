@@ -7,6 +7,13 @@ ini_set('display_errors', 1);
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+// Composer autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Load environment variables
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 // Set headers for JSON response
 header('Content-Type: application/json');
 
@@ -50,7 +57,7 @@ if (empty($_POST['g-recaptcha-response'])) {
     echo json_encode(['success' => false, 'error' => 'reCAPTCHA not completed.']);
     exit;
 }
-$recaptcha_secret = '6LcEXGorAAAAADkHIRM0QNyrAMHQ6v6d8S-hC85y';
+$recaptcha_secret = $_ENV['RECAPTCHA_SECRET_KEY'];
 $recaptcha_response = $_POST['g-recaptcha-response'];
 $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
 $recaptcha = file_get_contents($recaptcha_url . '?secret=' . urlencode($recaptcha_secret) . '&response=' . urlencode($recaptcha_response) . '&remoteip=' . urlencode($user_ip));
