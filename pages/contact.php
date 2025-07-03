@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Composer autoloader
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -104,6 +107,10 @@ $recaptcha_site_key = $_ENV['RECAPTCHA_SITE_KEY'];
                 <input type="text" name="website" id="website" style="display:none" tabindex="-1" autocomplete="off">
                 <input type="hidden" name="form_time" id="form_time" value="">
                 <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                <input type="hidden" name="js_token" id="js_token">
+<input type="hidden" name="form_time" id="form_time">
+
+
                 <button type="submit" class="cta-button">Send Message</button>
                 <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
             </form>

@@ -62,7 +62,7 @@ $recaptcha_response = $_POST['g-recaptcha-response'];
 $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
 $recaptcha = file_get_contents($recaptcha_url . '?secret=' . urlencode($recaptcha_secret) . '&response=' . urlencode($recaptcha_response) . '&remoteip=' . urlencode($user_ip));
 $recaptcha = json_decode($recaptcha, true);
-if (empty($recaptcha['success']) || $recaptcha['score'] < 0.5 || (isset($recaptcha['action']) && $recaptcha['action'] !== 'contact')) {
+if (empty($recaptcha['success']) || $recaptcha['score'] < 0.5 || (isset($recaptcha['action']) && $recaptcha['action'] !== 'submit')) {
     http_response_code(400);
     echo json_encode(['success' => false, 'error' => 'reCAPTCHA verification failed.']);
     exit;
@@ -134,7 +134,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->AltBody = "New Contact Form Submission\n\nName: $name\nEmail: $email\nSubject: $subject\nMessage:\n$message\n\nThis message was sent from the B.O.O.P Switzerland website contact form.";
 
         $mail->send();
-        echo json_encode(['success' => true]);
+        echo json_encode(['success' => true, 'message' => 'Your message was sent successfully.']);
+
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'error' => 'Mailer Error: ' . $mail->ErrorInfo]);
     }
