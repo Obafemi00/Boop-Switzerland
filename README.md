@@ -1,3 +1,4 @@
+![Link an image.](/learn/azure-devops/shared/media/mara.png)
 # B.O.O.P Switzerland Website
 
 This project involves the development of a modern, responsive website for B.O.O.P Switzerland, a global media powerhouse. The website was built iteratively, starting with a "Coming Soon" page and evolving into a comprehensive multi-page site with various features and a structured file organization.
