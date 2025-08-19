@@ -4703,3 +4703,345 @@ html {
     margin-top: 30px;
   }
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #f5f2ed;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+}
+
+/* Error Illustration */
+.error-illustration {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.wavy-line {
+    width: 300px;
+    height: 600px;
+}
+
+.line-path {
+    animation: drawLine 3s ease-in-out infinite alternate;
+}
+
+@keyframes drawLine {
+    0% { stroke-dasharray: 0 1000; }
+    100% { stroke-dasharray: 1000 0; }
+}
+
+.floating-circle {
+    fill: none;
+    stroke: #333;
+    stroke-width: 2;
+    animation: float 3s ease-in-out infinite;
+}
+
+.circle-1 {
+    animation-delay: 0s;
+}
+
+.circle-2 {
+    animation-delay: 1.5s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Broken Link */
+.broken-link {
+    position: absolute;
+    left: 60px;
+    top: 200px;
+    transform: rotate(-15deg);
+}
+
+.link-segment {
+    width: 40px;
+    height: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.segment-1 {
+    transform: translateX(-5px);
+}
+
+.segment-2 {
+    transform: translateX(5px);
+}
+
+.sparks {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+}
+
+.spark {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: #333;
+    border-radius: 50%;
+    animation: sparkle 0.8s ease-out infinite;
+}
+
+.spark-1 { top: -5px; left: -5px; animation-delay: 0s; }
+.spark-2 { top: -8px; left: 5px; animation-delay: 0.2s; }
+.spark-3 { top: -3px; left: 8px; animation-delay: 0.4s; }
+.spark-4 { top: -10px; left: -2px; animation-delay: 0.6s; }
+
+@keyframes sparkle {
+    0% { transform: scale(1) translateY(0); opacity: 1; }
+    100% { transform: scale(0.3) translateY(-15px); opacity: 0; }
+}
+
+/* Content */
+.content {
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    max-width: 600px;
+}
+
+.error-code {
+    font-size: clamp(8rem, 15vw, 12rem);
+    font-weight: 900;
+    color: #333;
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05em;
+}
+
+.four, .zero {
+    display: inline-block;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.four:first-child {
+    animation-delay: 0s;
+}
+
+.zero {
+    animation-delay: 0.3s;
+}
+
+.four:last-of-type {
+    animation-delay: 0.6s;
+}
+
+.dot {
+    font-size: 3rem;
+    vertical-align: top;
+    margin-left: 0.2em;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+}
+
+.error-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.error-message {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Home Button - Styled like the green button in image 2 */
+.home-btn {
+    background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(45, 212, 191, 0.3);
+    letter-spacing: 0.5px;
+}
+
+.home-btn:hover {
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4);
+}
+
+.home-btn:active {
+    transform: translateY(0);
+}
+
+/* Decorative Elements */
+.decorative-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.cross {
+    position: absolute;
+    font-size: 2rem;
+    color: #333;
+    font-weight: bold;
+    animation: rotate 8s linear infinite;
+}
+
+.cross-1 {
+    top: 15%;
+    right: 20%;
+    animation-delay: 0s;
+}
+
+.cross-2 {
+    bottom: 20%;
+    right: 15%;
+    animation-delay: 4s;
+}
+
+.circle {
+    position: absolute;
+    border: 3px solid #333;
+    border-radius: 50%;
+    animation: pulse 4s ease-in-out infinite;
+}
+
+.circle-large {
+    width: 60px;
+    height: 60px;
+    top: 20%;
+    right: 25%;
+    animation-delay: 0s;
+}
+
+.circle-small {
+    width: 40px;
+    height: 40px;
+    bottom: 25%;
+    right: 30%;
+    animation-delay: 2s;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+    
+    .error-illustration {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        margin-bottom: 2rem;
+        order: -1;
+    }
+    
+    .wavy-line {
+        width: 200px;
+        height: 300px;
+    }
+    
+    .broken-link {
+        left: 40px;
+        top: 100px;
+    }
+    
+    .content {
+        order: 1;
+    }
+    
+    .error-code {
+        margin-bottom: 1rem;
+    }
+    
+    .error-title {
+        margin-bottom: 1rem;
+    }
+    
+    .error-message {
+        margin-bottom: 2rem;
+    }
+    
+    .decorative-elements .cross,
+    .decorative-elements .circle {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 15px;
+    }
+    
+    .wavy-line {
+        width: 150px;
+        height: 200px;
+    }
+    
+    .broken-link {
+        left: 30px;
+        top: 80px;
+    }
+    
+    .link-segment {
+        width: 30px;
+        height: 15px;
+    }
+    
+    .home-btn {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+}
